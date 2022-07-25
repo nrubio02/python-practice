@@ -1,3 +1,5 @@
-Repo to compile my Python learning exercises.
+Repo to compile my Python learning exercises. Think of this more as a scrapbook to write down functions and techniques
+that I learn on the go.
 
-TODO: Add exercises about DAGs (Directed acyclic Graph) for scheduling workflows using Apache Airflow 
+TODO for airflow:
+- Look into other components, like: XCom (Cross communications), Connections
