@@ -1,11 +1,10 @@
 from airflow.models import DAG
-from airflow.contrib.sensors.file_sensor import FileSensor
-from airflow.operators.bash_operator import BashOperator
-from airflow.operators.python_operator import PythonOperator
-from airflow.operators.python_operator import BranchPythonOperator
-from airflow.operators.dummy_operator import DummyOperator
-from airflow.operators.email_operator import EmailOperator
-from dags.process import process_data
+from airflow.sensors.filesystem import FileSensor
+from airflow.operators.bash import BashOperator
+from airflow.operators.python import PythonOperator
+from airflow.operators.python import BranchPythonOperator
+from airflow.operators.empty import EmptyOperator
+from airflow.operators.email import EmailOperator  
 from datetime import datetime, timedelta
 
 # Update the default arguments and apply them to the DAG.
@@ -26,6 +25,9 @@ bash_task = BashOperator(task_id='cleanup_tempfiles',
                          bash_command='rm -f /home/repl/*.tmp',
                          dag=dag)
 
+def process_data():
+    print("Processing")
+    
 python_task = PythonOperator(task_id='run_processing',
                              python_callable=process_data,
                              provide_context=True,
@@ -42,7 +44,7 @@ email_report_task = EmailOperator(task_id='email_report_task',
                                   params={'department': 'Data subscription services'},
                                   dag=dag)
 
-no_email_task = DummyOperator(task_id='no_email_task', dag=dag)
+no_email_task = EmptyOperator(task_id='no_email_task', dag=dag)
 
 
 def check_weekend(**kwargs):

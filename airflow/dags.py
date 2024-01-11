@@ -4,12 +4,12 @@ import time
 from airflow import DAG
 from datetime import datetime, timedelta
 # Operator
-from airflow.operators.bash_operator import BashOperator
-from airflow.operators.python_operator import PythonOperator
+from airflow.operators.bash import BashOperator
+from airflow.operators.python import PythonOperator
 # Sensor
-from airflow.contrib.sensors.file_sensor import FileSensor
+from airflow.sensors.filesystem import FileSensor
 # Branching
-from airflow.operators.python_operator import BranchPythonOperator
+from airflow.operators.python import BranchPythonOperator
 
 # attributes to components of DAG
 default_arguments = {
